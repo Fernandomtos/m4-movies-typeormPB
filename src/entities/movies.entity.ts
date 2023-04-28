@@ -1,7 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, AfterLoad } from "typeorm";
 
 @Entity("movies")
 class Movie {
+  //count: number;
+
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -16,6 +18,12 @@ class Movie {
 
   @Column()
   price: number;
+
+  // @AfterLoad()
+  // contMovies() {
+  //   this.count = Movie.length;
+  //   console.log(this.count);
+  // }
 }
 
 export default Movie;
