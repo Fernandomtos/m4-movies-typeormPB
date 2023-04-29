@@ -10,7 +10,6 @@ const deleteMoviesService = async (idMovie: number): Promise<TMovie | void> => {
     id: idMovie,
   });
 
-  console.log(movieRemove);
   if (movieRemove) {
     await movieRepository.delete(movieRemove?.id);
   }
