@@ -14,9 +14,12 @@ const movieSchemaResponse = movieSchema.extend({});
 
 const moviesSchemaResponse = z.array(movieSchemaResponse);
 
+const movieSchemaUpdateRequest = movieSchemaRequest.partial();
+
 export {
   movieSchema,
   movieSchemaRequest,
   movieSchemaResponse,
   moviesSchemaResponse,
+  movieSchemaUpdateRequest,
 };
