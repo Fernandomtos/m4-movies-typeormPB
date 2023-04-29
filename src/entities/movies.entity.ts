@@ -1,9 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, AfterLoad } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("movies")
 class Movie {
-  //count: number;
-
   @PrimaryGeneratedColumn("increment")
   id: number;
 

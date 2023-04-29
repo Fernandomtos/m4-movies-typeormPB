@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
 import {
+  TMovieResponse,
+  TMovieUpdateRequest,
   TMoviesPagination,
   TMoviesRequest,
 } from "../interfaces/movies.interfaces";
 import createMoviesService from "../services/createMovies.service";
 import listAllMoviesService from "../services/listAllMovies.service";
+import updateMoviesService from "../services/updateMovies.service";
+import deleteMoviesService from "../services/deleteMovies.service";
 
 const createMoviesControllers = async (
   req: Request,
@@ -35,4 +39,34 @@ const listAllMoviesControllers = async (
   return res.json(movies);
 };
 
-export { createMoviesControllers, listAllMoviesControllers };
+const updateMovieControllers = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const idMovie: number = parseInt(req.params.id);
+  const movieData: TMovieUpdateRequest = req.body;
+
+  const newMovieData: TMovieResponse = await updateMoviesService(
+    idMovie,
+    movieData
+  );
+  return res.json(newMovieData);
+};
+
+const deleteMovieControllers = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const idMovie: number = parseInt(req.params.id);
+
+  deleteMoviesService(idMovie);
+
+  return res.status(204).send();
+};
+
+export {
+  createMoviesControllers,
+  listAllMoviesControllers,
+  updateMovieControllers,
+  deleteMovieControllers,
+};

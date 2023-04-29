@@ -1,37 +1,29 @@
 import { NextFunction, Request, Response } from "express";
-import {
-  TMovieResponse,
-  TMoviesRequest,
-} from "../interfaces/movies.interfaces";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Movie } from "../entities";
 import { AppError } from "../error";
 
-const ensureNameExistsMiddlewares = async (
+const ensureIdExistsMiddlewares = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<TMovieResponse | void> => {
-  const movieName: string = req.body.name;
-
-  if (!movieName) {
-    return next();
-  }
+): Promise<Response | void> => {
+  const idMovie: number = parseInt(req.params.id);
 
   const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie);
 
   const findMovie: Movie | null = await movieRepository.findOne({
     where: {
-      name: movieName,
+      id: idMovie,
     },
   });
 
-  if (findMovie) {
-    throw new AppError("Movie already exists.", 409);
+  if (!findMovie) {
+    throw new AppError("Movie not found", 404);
   }
 
   return next();
 };
 
-export default ensureNameExistsMiddlewares;
+export default ensureIdExistsMiddlewares;
